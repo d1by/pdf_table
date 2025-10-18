@@ -241,6 +241,7 @@ class DeployUtils(BaseUtil):
 
     @staticmethod
     def prepare_onnx_model(onnx_dir, device_id=0, num_threads=4):
+<<<<<<< HEAD
         try:
             import onnx
             import onnxruntime as ort
@@ -249,6 +250,11 @@ class DeployUtils(BaseUtil):
             logger.warning(
                 "The inference precision is change to 'fp32', please install the dependencies that required for 'fp16' inference, pip install onnxruntime-gpu onnx onnxconverter-common"
             )
+=======
+        import onnx
+        import onnxruntime as ort
+        from onnxconverter_common import float16
+>>>>>>> 503ae7f (Updated code to run on CPUs)
 
         if onnx_dir.endswith(".onnx"):
             fp16_model_file = onnx_dir
@@ -260,6 +266,7 @@ class DeployUtils(BaseUtil):
                 onnx_model = onnx.load_model(float_onnx_file)
                 trans_model = float16.convert_float_to_float16(onnx_model, keep_io_types=True)
                 onnx.save_model(trans_model, fp16_model_file)
+<<<<<<< HEAD
 
                 logger.info(f"转换ONNX 模型 到 FP16: {fp16_model_file}")
 
@@ -278,3 +285,18 @@ class DeployUtils(BaseUtil):
         logger.info(f"采用ONNX FP16 推理【device_id={device_id}】：{fp16_model_file}")
 
         return predictor
+=======
+                logger.info(f"转换ONNX 模型 到 FP16: {fp16_model_file}")
+
+        providers = ["CPUExecutionProvider"]
+        sess_options = ort.SessionOptions()
+        predictor = ort.InferenceSession(fp16_model_file, sess_options=sess_options, providers=providers)
+
+        assert "CPUExecutionProvider" in predictor.get_providers(), (
+            "ONNX Runtime CPUExecutionProvider not available. Try reinstalling with: pip install onnxruntime"
+        )
+
+        logger.info(f"采用ONNX FP16 推理【CPU-only】：{fp16_model_file}")
+        return predictor
+
+>>>>>>> 503ae7f (Updated code to run on CPUs)

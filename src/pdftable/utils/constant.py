@@ -21,7 +21,11 @@ def get_user_home():
     return os.path.expanduser("~")
 
 
+<<<<<<< HEAD
 def get_value_from_env_or_default(default: str, env_key: str = None):
+=======
+def getenv(default: str, env_key: str = None):
+>>>>>>> 503ae7f (Updated code to run on CPUs)
     if env_key is None:
         return default
     return default if not os.getenv(env_key) else os.getenv(env_key)
@@ -35,6 +39,7 @@ class Constants(object):
     常量工具类
     """
 
+<<<<<<< HEAD
     @staticmethod
     def getenv(env_key: str, default="") -> str:
         return get_value_from_env_or_default(default=default, env_key=env_key)
@@ -43,11 +48,27 @@ class Constants(object):
 
     PDFTABLE_USE_MODELSCOPE_HUB = getenv("PDFTABLE_USE_MODELSCOPE_HUB", "0").lower() in ["true", "1"]
     PDFTABLE_BASE_OUTPUT_DIR = getenv("PDFTABLE_BASE_OUTPUT_DIR", default=f"{USER_HOME}/.cache/pdftable")
+=======
+    """
+    @staticmethod
+    def getenv(env_key: str, default="") -> str:
+        return get_value_from_env_or_default(default=default, env_key=env_key)
+    """
+
+    USER_HOME = get_user_home()
+
+    PDFTABLE_USE_MODELSCOPE_HUB = os.getenv("PDFTABLE_USE_MODELSCOPE_HUB", "0").lower() in ["true", "1"]
+    PDFTABLE_BASE_OUTPUT_DIR = os.getenv("PDFTABLE_BASE_OUTPUT_DIR", default=f"{USER_HOME}/.cache/pdftable")
+>>>>>>> 503ae7f (Updated code to run on CPUs)
 
     OUTPUT_DIR = f"{PDFTABLE_BASE_OUTPUT_DIR}/outputs"
     DATA_DIR = f"{PDFTABLE_BASE_OUTPUT_DIR}/data"
 
+<<<<<<< HEAD
     SRC_HOME_DIR = getenv("SRC_HOME_DIR", default=SRC_ABS_PATH)
+=======
+    SRC_HOME_DIR = os.getenv("SRC_HOME_DIR", default=SRC_ABS_PATH)
+>>>>>>> 503ae7f (Updated code to run on CPUs)
     SRC_DATA_HOME_DIR = f"{SRC_HOME_DIR}/data"
     SRC_IMAGE_DIR = f"{SRC_DATA_HOME_DIR}/image"
 
@@ -66,8 +87,13 @@ class Constants(object):
     # ocr
     #
     ####################################################################################
+<<<<<<< HEAD
     SCOPE_MODEL_BASE_DIR = os.path.join(getenv("MODELSCOPE_CACHE", f"{USER_HOME}/.cache/modelscope"), "hub")
     HF_HUB_BASE_DIR = getenv("HF_HUB_CACHE", f"{USER_HOME}/.cache/huggingface/hub")
+=======
+    SCOPE_MODEL_BASE_DIR = os.path.join(os.getenv("MODELSCOPE_CACHE", f"{USER_HOME}/.cache/modelscope"), "hub")
+    HF_HUB_BASE_DIR = os.getenv("HF_HUB_CACHE", f"{USER_HOME}/.cache/huggingface/hub")
+>>>>>>> 503ae7f (Updated code to run on CPUs)
     OCR_FONT_BASE_DIR = f"{SCOPE_MODEL_BASE_DIR}/cycloneboy/pdftable_config/fonts"
 
     FONT_CONFIG = {
