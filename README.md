@@ -1,3 +1,7 @@
+```shell
+ pdftable --output_dir ./out5 --file_path_or_url input.pdf --detect_model resnet18 --recognizer_model CRNN --table_structure_model LineCell --lang en --debug
+```
+
 # pdf_table
 
 ## install
